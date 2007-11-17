@@ -1,0 +1,47 @@
+<html>  <head>    <title>Dojo: Hello World!</title>        <style type="text/css">
+	@import "./dojo-release-1.0.0/dojo/resources/dojo.css";
+	@import "./dojo-release-1.0.0/dijit/themes/tundra/tundra.css";
+	@import "./dojo-release-1.0.0/dojox/widget/SortList/SortList.css";
+	</style>	  </head><script type="text/javascript" src="./dojo-release-1.0.0/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+<script type="text/javascript">    dojo.require("dojo.parser");
+	dojo.require("dijit.Dialog");
+	dojo.require("dijit.form.Button");
+    dojo.require("dijit.Toolbar");
+	dojo.require("dijit.layout.TabContainer");    dojo.require("dijit.layout.SplitContainer");
+	dojo.require("dijit.layout.LayoutContainer");    dojo.require("dijit.layout.ContentPane");    dojo.require("dijit.layout.AccordionContainer");
+	dojo.require("dojox.widget.SortList");
+	
+	function DLListNode(elem) {
+        this.elem = elem;
+        this.prev = this.next = null;
+    }
+
+	function addTitle() {
+	    alert("adding Title");
+	}
+</script>
+ <body class="tundra">  <!-- main section with tree, table, and preview -->
+
+<div dojoType="dijit.layout.SplitContainer" orientation="vertical" style="height:100%" layoutAlign="client" sizerWidth="7">
+ 
+    <div id="Div1" dojoType="dijit.layout.ContentPane" title="Inbox" style="padding:8px;" layoutAlign="left">
+	    <h1>Title</h1>
+    </div>
+ 
+<div dojoType="dijit.layout.SplitContainer" orientation="horizontal" style="height:100%" layoutAlign="client" sizerWidth="7">
+
+	<div dojoType="dijit.layout.SplitContainer" orientation="vertical"  style="width:100px" layoutAlign="client" sizerWidth="7">	
+	    <div id="Div2" dojoType="dijit.layout.ContentPane" title="Inbox" style="padding:8px;" layoutAlign="left">
+				<h1>Side Bar</h1>
+				<br>
+				<button dojoType="dijit.form.Button" onClick="addTitle()">Title</button>
+		</div>
+	</div>
+	
+	<div dojoType="dijit.layout.SplitContainer" orientation="vertical"  layoutAlign="client" sizerWidth="7">
+		<div id="Inbox" dojoType="dijit.layout.ContentPane" title="Inbox" style="padding:8px;" layoutAlign="left">
+				<h1>Main Page</h1>
+		</div>
+	</div>
+
+</div></div>  </body></html>
