@@ -1,0 +1,209 @@
+/* CSS Document */
+
+#wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+#banner {
+	padding:0px;
+	height: 114px;
+	width:600px;
+	border-bottom:3px solid #000000;
+}
+
+#banner_right {
+	position:relative;
+	margin-right:495px;
+	top:-214px;
+	left:725px;
+	height: 114px;
+	background:url(banner_bg.jpg) top left repeat-x;
+}
+
+#banner_wave {
+	height:114px;
+	min-width:495px;
+	margin-right:230px;
+	background:url(wave.jpg) top right no-repeat;
+}
+
+#sidebar {
+	width: 186px;
+	text-align:center;
+}
+
+#sidebar h1 {
+	margin:10px 0px 15px 0px;
+	width:186px;
+	height:40px;
+	background:url(pageitems.gif) top left no-repeat;
+}
+
+#sidebar h1 span {
+	display:none;
+}
+
+#editor {
+	margin:50px 0px 75px 0px;
+	max-height:100%;
+	border:1px solid #000000;
+}
+
+#mainContent {
+overflow:scroll;
+}
+
+#footer {
+	width:100%;
+	margin-right:200px;
+	position:fixed;
+	bottom:0px;
+	left:185px;
+	height:75px;
+}
+
+#footer span {
+	display:none;
+}
+
+.large_button {
+	width:100px;
+}
+
+#banner h1 span {
+	display:none;
+}
+
+#banner h2 span {
+	display:none;
+}
+
+#banner h1 {
+	margin:20px 0px 0px 20px;
+	background:url(access_logo.gif) top left no-repeat;
+	height:80px;
+	width:275px;
+}
+
+#banner h2 {
+	position:relative;
+	top:-100px;
+	left:320px;
+	background:url(textbanner.png) top left no-repeat;
+	height: 114px;
+	width:402px;
+	border-left:5px solid #000000;
+}
+
+#login {
+	display:none;
+	position:relative;
+	top: -165px;
+	left: 650px;
+}
+
+#login h3 {
+	margin-bottom:5px;
+	text-decoration:underline;
+}
+
+#login p {
+	display:inline;
+	font-size:14px;
+	font-family:"Courier New", Courier, monospace;
+	font-weight:bold;
+}
+
+#txtUsername, #txtPassword {
+	width: 100px;
+}
+
+#btnAddTitle, #btnAddImage, #btnAddText, #btnAddLink, #btnAddList, #btnAddBreak {
+	width:150px;
+	height:75px;
+	border:none;
+}
+
+#btnSave, #btnPublish {
+	width:119px;
+	height:62px;
+	border:none;
+}
+
+#btnAddTitle {
+	background: url("btn_title.gif") 0 0 no-repeat;
+}
+
+#btnAddImage {
+	background: url("btn_image.gif") 0 0 no-repeat;
+}
+
+#btnAddText {
+	background: url("btn_text.gif") 0 0 no-repeat;
+}
+
+#btnAddLink {
+	background: url("btn_link.gif") 0 0 no-repeat;
+}
+
+#btnAddList {
+	background: url("btn_list.gif") 0 0 no-repeat;
+}
+
+#btnAddBreak {
+	background: url("btn_break.gif") 0 0 no-repeat;
+}
+
+#btnSave {
+	background: url("savebutton.gif") 0 -1px no-repeat;
+}
+
+#btnPublish {
+	background: url("publishbutton.gif") 0 -1px no-repeat;
+}
+
+#btnAddTitle:hover, #btnAddImage:hover, #btnAddText:hover, #btnAddLink:hover, #btnAddList:hover, #btnAddBreak:hover {
+	background-position: 0px -75px;
+}
+
+#btnSave:hover, #btnPublish:hover {
+	background-position: 0px -62px;
+}
+
+#sidebar span {
+	display:none;
+}
+
+#mainContent h1 {
+	font-family:Arial;
+	font-size:32px;
+	color:#003366;
+	margin-top:20px;
+}
+
+#mainContent h1#page_title {
+	font-family:Arial;
+	font-size:40px;
+	color:#660000;
+	margin-top:20px;
+	border-bottom:dotted 2px #003366;
+	text-align:center;
+}
+
+#mainContent p {
+	margin-left:25px;
+	margin-top:20px;
+	font-size:24px;
+	color:#333333;
+}
+
+#mainContent a {
+	font-size:24px;
+	color:#cc9900;
+	text-decoration:none;
+}
+
+#mainContent a:hover {
+	color:#003366;
+}

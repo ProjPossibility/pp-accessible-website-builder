@@ -1,0 +1,293 @@
+<html>
+	<head>
+    	<title>Dojo: Layout Example</title>
+    
+   		<style type="text/css">
+			@import "../dojo-release-1.0.0/dojo/resources/dojo.css";
+			@import "../dojo-release-1.0.0/dijit/themes/tundra/tundra.css";
+			@import "../dojo-release-1.0.0/dojox/widget/SortList/SortList.css";
+			@import "./reset.css";
+			@import "./style.css";
+		</style>
+		
+		<script type="text/javascript" src="../dojo-release-1.0.0/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+		
+		<script type="text/javascript">
+			dojo.require("dojo.parser");
+	dojo.require("dijit.Dialog");
+	dojo.require("dijit.form.Button");
+    	dojo.require("dijit.Toolbar");
+	dojo.require("dijit.layout.TabContainer");
+	dojo.require("dijit.layout.StackContainer");
+    	dojo.require("dijit.layout.SplitContainer");
+	dojo.require("dijit.layout.LayoutContainer");
+    	dojo.require("dijit.layout.ContentPane");
+    	dojo.require("dijit.layout.AccordionContainer");
+	dojo.require("dojox.widget.SortList");
+	dojo.require("dojo.data.ItemFileWriteStore");
+	dojo.require("dijit.Declaration");
+    	dojo.require("dijit.Editor");
+
+	dojo.require("dijit._editor.plugins.LinkDialog");
+	dojo.require("dijit.InlineEditBox");
+	dojo.require("dijit.form.Textarea");
+    
+    	// Global var for new mail pane
+    	var paneId=1;
+
+	// Swaps places current container item with the item above it
+	function MoveItemUp(){
+		console.debug("--Enter MoveItemUp()");
+		var PreviewKids = mainContent.getChildren();
+		var MyParentId = this.containerNode.offsetParent.id;
+		var IsFound = -1;		
+		var SavedKids = new Array();
+
+		// Save all nodes from myself and down
+		for(var i=0; i<PreviewKids.length; i++){
+			console.debug(PreviewKids[i]);
+			if(PreviewKids[i].id == MyParentId){
+				IsFound = i;
+				SavedKids[0] = PreviewKids[i-1];
+			}
+			if(IsFound == 0){
+				// Trying to move up topmost item when there is no circular shifting
+				break;
+			}
+			if(IsFound > (-1)){
+				SavedKids[i-IsFound+1] = PreviewKids[i];				
+				// Delete all nodes from myself and down
+				mainContent.removeChild(PreviewKids[i]);
+			}
+		}
+
+		if(SavedKids.length > 1){
+			// Swap current node with node below it
+			mainContent.addChild(SavedKids[1]);
+			mainContent.addChild(SavedKids[0]);
+			// Append all other nodes
+			for(var k=2; k<SavedKids.length; k++){
+				console.debug("--Add element "+i);
+				mainContent.addChild(SavedKids[k]);		
+			}
+		}
+
+		console.debug("--Exit MoveItemUp()");
+	}
+
+	// Swaps places current container item with the item below it
+	function MoveItemDown(){
+		console.debug("--Enter MoveItemDown");
+		var PreviewKids = mainContent.getChildren();
+		var MyParentId = this.containerNode.offsetParent.id;
+		var IsFound = -1;		
+		var SavedKids = new Array();
+
+		// Save all nodes from myself and down
+		for(var i=0; i<PreviewKids.length; i++){
+			if(PreviewKids[i].id == MyParentId){
+				IsFound = i;					
+			}
+			// If the current container item is the last one, don't do anything
+			if(IsFound > (-1) && IsFound != PreviewKids.length-1){
+				SavedKids[i-IsFound] = PreviewKids[i];
+				// Delete all nodes from myself and down
+				mainContent.removeChild(PreviewKids[i]);
+			}
+		}
+
+		if(SavedKids.length > 1){
+			// Swap current node with node below it
+			mainContent.addChild(SavedKids[1]);
+			mainContent.addChild(SavedKids[0]);
+			// Add all other nodes accordingly
+			for(var k=2; k<SavedKids.length; k++){
+				mainContent.addChild(SavedKids[k]);		
+			}
+		}
+
+		console.debug("--Exit MoveItemDown()");
+	}
+
+	// Deletes current container item
+	function RemoveItem(){
+		console.debug("--Enter RemoveObject");
+		
+		var Handle = dijit.byId(this.containerNode.offsetParent.id);
+		mainContent.removeChild(Handle);
+		
+		console.debug("--Exit RemoveObject");	
+	}	
+
+	// Appends Move Up, Move Down, and Remove buttons to each container item
+	function AddControlButtons(container){
+		console.debug(container);
+		var moveUpButton = new dijit.form.Button({label: "Move Up", onClick:  MoveItemUp});
+		var moveDownButton = new dijit.form.Button({label: "Move Down", onClick:  MoveItemDown});
+		var removeButton = new dijit.form.Button({label: "Remove", onClick:  RemoveItem});
+		container.addChild(moveUpButton);
+		container.addChild(moveDownButton);
+		container.addChild(removeButton);
+	}
+
+	// (Test) Adds new container item
+	function AddItem() {
+		var newTab = new obj.NewItem({id: "new"+paneId  }).container;	    	
+		dojo.mixin(newTab, {title: "New Message #" + paneId++});
+	    	mainContent.addChild(newTab);
+	}
+
+	// Adds new title
+	function AddTitle(){
+		var newTitle = new obj.title({id: "new"+paneId  }).container;	    	
+		dojo.mixin(newTitle, {title: "New Message #" + paneId++});
+		AddControlButtons(newTitle);
+		mainContent.addChild(newTitle);
+	}
+
+	// Adds new paragraph
+	function AddParagraph(){
+		var newParagraph = new obj.paragraph({id: "new"+paneId  }).container;	    	
+		dojo.mixin(newParagraph, {title: "New Message #" + paneId++});
+		AddControlButtons(newParagraph);
+		mainContent.addChild(newParagraph);
+	}
+
+	// Adds new separator
+	function AddSeparator(){
+		var newSeparator = new obj.separator({id: "new"+paneId  }).container;	    	
+		dojo.mixin(newSeparator, {title: "New Message #" + paneId++});
+		AddControlButtons(newSeparator);
+		mainContent.addChild(newSeparator);
+	}
+
+	// Adds new link
+	function AddLink(){
+		var newLink = new obj.link({id: "new"+paneId  }).container;	    	
+		dojo.mixin(newLink, {title: "New Message #" + paneId++});
+		AddControlButtons(newLink);
+		mainContent.addChild(newLink);
+	}
+
+	// Opens dialog to retrieve image path
+	function LaunchDialog(){
+		dijit.byId('optionsDialog').show();
+	}
+
+	// Adds new image
+	function AddImage() {
+		dijit.byId('optionsDialog').hide();
+		imagePath = document.getElementById('imagePath').value;
+		var newPic = new obj.picture({id: "new"+paneId  }).container;	    	
+		dojo.mixin(newPic, {title: "New Message #" + paneId++});
+		//Insert image tag and its source, which is retrieved from dialog input
+		newPic.domNode.innerHTML = "<br><img src='"+imagePath+"'/><br>";
+		AddControlButtons(newPic);
+		mainContent.addChild(newPic);	}
+			
+			function init() {
+				element = dojo.byId('btnAddTitle');
+				dojo.connect(element, 'onclick', 'AddTitle');
+				element = dojo.byId('btnAddImage');
+				dojo.connect(element, 'onclick', 'LaunchDialog');
+				element = dojo.byId('btnAddText');
+				dojo.connect(element, 'onclick', 'AddParagraph');
+				element = dojo.byId('btnAddLink');
+				dojo.connect(element, 'onclick', 'AddLink');
+				element = dojo.byId('btnAddList');
+				//dojo.connect(element, 'onclick', 'AddList');
+				element = dojo.byId('btnAddBreak');
+				dojo.connect(element, 'onclick', 'AddSeparator');
+			}
+			
+			dojo.addOnLoad(init);
+		</script>
+		
+  	</head>
+	
+	<body class="tundra">  
+		<!-- Inline declaration for programmatically created items  -->
+		<div dojoType="dijit.Declaration" widgetClass="obj.title">
+			<div dojoType="dijit.layout.LayoutContainer" dojoAttachPoint="container">
+				<br>      		
+				<h1 dojoType="dijit.InlineEditBox" title="title">Click to edit Title</h1>
+				<br><br>
+			</div>
+		</div>
+
+		<div dojoType="dijit.Declaration" widgetClass="obj.paragraph">    
+			<div dojoType="dijit.layout.LayoutContainer" dojoAttachPoint="container">			
+				<p dojoType="dijit.InlineEditBox" autoSave="false" editor="dijit.form.Textarea">				
+					This is an editable paragraph.			
+				</p>
+				<br><br>
+			</div>
+		</div>
+      
+		<div dojoType="dijit.Declaration" widgetClass="obj.separator">    
+			<div dojoType="dijit.layout.LayoutContainer" dojoAttachPoint="container">		
+				<br>
+				<hr>
+				<br>
+				<br><br>
+			</div>
+
+		</div>
+
+		<div dojoType="dijit.Declaration" widgetClass="obj.link">    
+			<div dojoType="dijit.layout.LayoutContainer" dojoAttachPoint="container">
+				<br>
+	      		<span dojoType="dijit.InlineEditBox" title="link"><a href="linkaddress">Click to edit link</a></span>
+				<br>
+				<br><br>	
+			</div>
+		</div>
+
+		<div dojoType="dijit.Declaration" widgetClass="obj.picture">    
+			<div dojoType="dijit.layout.LayoutContainer" dojoAttachPoint="container">
+				<br><br>
+			</div>
+		</div>
+
+		<!--Pop-up box to get image path-->		<div dojoType="dijit.Dialog" id="optionsDialog" title="Options:">	
+			For URL:<input id="imagePath" dojoType="dijit.form.TextBox" type="text">			<button dojoType="dijit.form.Button" onClick="AddImage()">Submit</button> 
+		</div>
+
+		<!--Code for frames-->
+		<div id="wrapper" dojoType="dijit.layout.LayoutContainer">
+			<div id="banner" dojoType="dijit.layout.ContentPane" layoutAlign="top">
+				<h1><span>access squared</span></h1>
+				<h2><span>accessible web development for the accessible web</span></h2>
+				<div id="login">
+					<h3>Login</h3>
+					<p>username:</p><input id="txtUsername" type="text" name="txtUsername" value="" dojoType="dijit.form.TextBox" /><br>
+					<p>password:</p><input id="txtPassword" type="password" name="txtPassword" value="" dojoType="dijit.form.TextBox" /><br>
+					<button id="btnLogin" dojoType="dijit.form.Button">login</button>
+				</div> 
+				<div id="banner_right">
+					<div id="banner_wave"></div>
+				</div>
+			</div>
+			<div id="sidebar" dojoType="dijit.layout.ContentPane" layoutAlign="left">
+				<h1><span>Page Items</span></h1>
+				<ul>
+					<li><button id="btnAddTitle" dojoType="dijit.form.Button"><span>Add Title</span></button></li>
+					<li><button id="btnAddImage" dojoType="dijit.form.Button"><span>Add Image</span></button></li>
+					<li><button id="btnAddText" dojoType="dijit.form.Button"><span>Add Text</span></button></li>
+					<li><button id="btnAddLink" dojoType="dijit.form.Button"><span>Add Link</span></button></li>
+					<li><button id="btnAddList" dojoType="dijit.form.Button"><span>Add List</span></button></li>
+					<li><button id="btnAddBreak" dojoType="dijit.form.Button"><span>Add Break</span></button></li>
+				</ul>
+			</div>
+			<div id="editor" dojoType="dijit.layout.ContentPane" orientation="vertical"  layoutAlign="client" sizerWidth="7">
+	    		<div id="mainContent" dojoType="dijit.layout.LayoutContainer" title="mainContent" jsId="mainContent" orientation="vertical">
+					<h1>Main Page 1</h1>
+					<br><br>
+				</div>
+			</div>
+			<div id="footer">
+				here is some stuff
+			</div>
+		</div>
+	</body>
+</html>

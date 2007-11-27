@@ -1,0 +1,53 @@
+<html>  <head>    <title>Dojo: Hello World!</title>
+
+	<style type="text/css">
+	@import "./dojo-release-1.0.0/dojo/resources/dojo.css";
+	@import "./dojo-release-1.0.0/dijit/themes/tundra/tundra.css";
+	@import "./dojo-release-1.0.0/dojox/widget/SortList/SortList.css";
+	</style>
+
+<!-- <script type="text/javascript" src="http://o.aolcdn.com/dojo/0.9.0/dojo/dojo.xd.js" djConfig="parseOnLoad: true"></script> -->
+<script type="text/javascript" src="./dojo-release-1.0.0/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+<script type="text/javascript">    dojo.require("dojo.parser");
+	dojo.require("dijit.Dialog");
+	dojo.require("dijit.form.Button");
+    dojo.require("dijit.Toolbar");
+	dojo.require("dijit.layout.TabContainer");    dojo.require("dijit.layout.SplitContainer");
+	dojo.require("dijit.layout.LayoutContainer");    dojo.require("dijit.layout.ContentPane");    dojo.require("dijit.layout.AccordionContainer");
+	dojo.require("dojox.widget.SortList");
+
+	function click() {		dojo.xhrGet({			url: "message.php",			handleAs: "text",			load: function(response){				alert(response);			},				content: {name: dojo.byId("name").value}			});	}
+</script>  </head>  <body class="tundra">
+
+
+
+<!-- main section with tree, table, and preview -->
+<div dojoType="dijit.layout.SplitContainer" orientation="horizontal" style="height:100%" layoutAlign="client" sizerWidth="7">
+
+		<div dojoType="dijit.layout.SplitContainer" orientation="vertical"  style="height:50px" layoutAlign="client" sizerWidth="7">
+			<div dojoType="dijit.layout.AccordionContainer" sizeMin="20" sizeShare="20">     			<div dojoType="dijit.layout.AccordionPane" title="Folders">            		Folders will go here        		</div>        		<div dojoType="dijit.layout.AccordionPane" title="Address Book">           	 		Address Book will go here        		</div> 	
+			</div>
+			<div id="spacer" dojoType="dijit.layout.ContentPane" title="spacer" style="height:10px;" layoutAlign="left">
+			</div>
+		</div>
+	
+	<div dojoType="dijit.layout.SplitContainer" orientation="vertical"  layoutAlign="client" sizerWidth="7">
+		<div dojoType="dijit.Toolbar" layoutAlign="top" style="height:20%;">           Toolbar will go here    	</div>
+		<div dojoType="dijit.layout.TabContainer"  id="tabs" jsId="tabs" style="padding:1px;" layoutAlign="client">
+			<div id="Inbox" dojoType="dijit.layout.ContentPane" title="Inbox" style="padding:8px;" layoutAlign="left">
+					<h1>Inbox</h1>
+					<label for="name">Please enter your name:</label>					<input type="text" id="name">					<br>					<!-- a Dijit button that calls our click() handler when clicked -->					<button dojoType="dijit.form.Button" onClick="click()">Hi there</button>
+			</div>
+			<div id="Read" dojoType="dijit.layout.ContentPane" title="Sent" style="padding:8px;" layoutAlign="left">
+					<h1>Sent</h1>
+			</div>
+		</div> <!-- End Tab Container -->
+		<div dojoType="dijit.layout.ContentPane" sizeShare="20" layoutAlign="Message">
+				<h1>Message</h1>
+		</div>	
+	</div>
+
+</div>
+
+
+  </body></html>

@@ -1,0 +1,108 @@
+<html>  <head>    <title>Dojo: Hello World!</title>        <style type="text/css">
+	@import "./dojo-release-1.0.0/dojo/resources/dojo.css";
+	@import "./dojo-release-1.0.0/dijit/themes/tundra/tundra.css";
+	@import "./dojo-release-1.0.0/dojox/widget/SortList/SortList.css";
+	</style>	  </head><script type="text/javascript" src="./dojo-release-1.0.0/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+<script type="text/javascript">    dojo.require("dojo.parser");
+	dojo.require("dijit.Dialog");
+	dojo.require("dijit.form.Button");
+    dojo.require("dijit.Toolbar");
+	dojo.require("dijit.layout.TabContainer");    dojo.require("dijit.layout.SplitContainer");
+	dojo.require("dijit.layout.LayoutContainer");    dojo.require("dijit.layout.ContentPane");    dojo.require("dijit.layout.AccordionContainer");
+	dojo.require("dojox.widget.SortList");
+	
+
+	//var RemoveObjId = "0";
+
+	function addTitle() {
+	    //alert("Adding Title");
+	    var ni = document.getElementById('mainPageDiv');
+		var numi = document.getElementById('theValue');
+		var num = (document.getElementById('theValue').value -1)+ 2;
+		numi.value = num;
+		var newdiv = document.createElement('div');
+		var divIdName = 'my'+num+'Div';
+		newdiv.setAttribute('id',divIdName);
+		alert("adding: "+divIdName);
+		newdiv.innerHTML = 'Element Number '+num+' has been added! <a href=\'#\' onclick=\'removeTitle("'+divIdName+'")\'>Remove the div "'+divIdName+'"</a>';
+		ni.appendChild(newdiv);
+	}
+
+	function removeTitle(divNum) {
+		var d = document.getElementById('mainPageDiv');
+		var olddiv = document.getElementById(divNum);
+		d.removeChild(olddiv);
+	}
+
+	function DojoRemoveObject(){
+		console.debug("Inside DojoRemoveObject");
+		console.debug(RemoveObjId);
+		Inbox.removeChild(RemoveObjId);	
+	}
+
+	function DojoSelectObject(){
+		console.debug("Inside DojoSelectObject");
+		RemoveObjId = this.id;
+		console.debug(RemoveObjId);
+	}
+
+	function DojoAddButton(){
+		console.debug("DojoAddButton");                
+		var params = {       
+			label: "New Button",
+                        // Note here, when creating programmatically, this is a function, not a string
+			id: "New Button",
+			onClick: DojoSelectObject                  
+		};
+                
+                var button_dynamic = new dijit.form.Button(
+                        params//dojo.byId("button-placeholder")                   
+		);
+		
+		Inbox.addChild(button_dynamic);
+	}
+
+	function DojoAddTextBox(){
+		console.debug("DojoAddTextBox");                
+		var params = {       
+			label: "Test",
+                        // Note here, when creating programmatically, this is a function, not a string                 
+		};
+                
+                var textbox_dynamic = new dijit.form.TextBox(
+                        params, dojo.byId("textbox-placeholder")
+		);
+
+		Inbox.addChild(textbox_dynamic);
+	}
+	
+</script>
+ <body class="tundra">  <!-- main section with tree, table, and preview -->
+
+<div dojoType="dijit.layout.SplitContainer" orientation="vertical" style="height:100%" layoutAlign="client" sizerWidth="7">
+ 
+    <div id="Div1" dojoType="dijit.layout.ContentPane" title="Inbox" style="padding:8px;" layoutAlign="left">
+	    <h1>Title</h1>
+    </div>
+ 
+<div dojoType="dijit.layout.SplitContainer" orientation="horizontal" style="height:100%" layoutAlign="client" sizerWidth="7">
+
+	<div dojoType="dijit.layout.SplitContainer" orientation="vertical"  style="width:100px" layoutAlign="client" sizerWidth="7">	
+	    <div id="Div2" dojoType="dijit.layout.ContentPane" title="Inbox" style="padding:8px;" layoutAlign="left">
+				<h1>Side Bar</h1>
+				<br>
+				<button dojoType="dijit.form.Button" onClick="DojoAddButton()">Add Button</button>
+				<button dojoType="dijit.form.Button" onClick="DojoRemoveObject()">Remove Selected Object</button>
+		</div>
+	</div>
+	
+	<div dojoType="dijit.layout.SplitContainer" orientation="vertical"  layoutAlign="client" sizerWidth="7">
+		<div id="Inbox" jsId="Inbox" dojoType="dijit.layout.StackContainer" title="Inbox" style="padding:8px;" layoutAlign="left">
+				<h1>Main Page</h1>
+				<input type="hidden" value="0" id="theValue" />
+				<div id="mainPageDiv"> </div>
+				<br>
+		</div>
+	</div>
+
+</div></div>  </body></html>
